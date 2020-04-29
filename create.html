@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Roy's Bookstore</title>
+    <link rel= "stylesheet" type= "text/css"  href= "style.css">
+
+  </head>
+  <body>
+    <div class = "search_area">
+          <input type = "text"  id = "searchBar" placeholder = "Keyword(s)">
+          <input type = "button" id = "searchButton" value = "Search" onclick = "window.location.href = 'main.php?show=searchFunc&words='+document.getElementById('searchBar').value">
+      </div>
+    <h1 id="heading">Roy's Bookstore</<h1>
+
+    <br>
+    <div id="login_box">
+    <input id="desired_username" type="text" class="inputs" placeholder="Desired Username" > <br>
+    <input id="desired_password" type="password" class="inputs" placeholder="Desired Password"> <br>
+    <div id="entries"></div>
+    <input type="submit" value="CONFIRM" class="login_buttons" id="confirm">
+    <a href="indexx.html"><input type="submit" class="login_buttons" value="BACK" id="back"></a>
+  </div>
+  </body>
+  <script>
+    var btn=document.getElementById("confirm");
+    btn.addEventListener('click',checkValid);
+
+    function checkValid()
+    {
+      let desired_username=document.getElementById("desired_username");
+      let desired_password=document.getElementById("desired_password");
+
+      if(desired_username.validity.valueMissing || desired_username.value.trim()=='')
+      {
+        alert("Please do not leave the fields empty");
+      }
+      else if(desired_password.validity.valueMissing || desired_password.value.trim()=='')
+      {
+        alert("Please do not leave the fields empty");
+      }
+      else {
+
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+          xmlhttp = new XMLHttpRequest();
+        } else {
+          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var mesgs = document.getElementById("entries");
+              console.log(xmlhttp.responseText.length)
+              mesgs.innerHTML = xmlhttp.responseText;
+              if(xmlhttp.responseText == '<h1>Account created! Welcome</h1>'){
+                window.setTimeout(function(){
+                  window.location.href = "indexx.html";
+                }, 3000);
+              } else {
+                window.setTimeout(function(){
+                  window.location.href = "create.html";
+                }, 3000);
+              }
+      }
+    }
+    xmlhttp.open("POST", "create.php",true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send("username="+document.getElementById("desired_username").value+"&password="+document.getElementById("desired_password").value);
+      }
+    }
+
+
+  </script>
+</html>

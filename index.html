@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1> Bookstore </<h1>
+    <br>
+    <input id="username" type="text" placeholder="Username" > <br>
+    <input id="password" type="password" placeholder="Password"> <br>
+    <input type="submit" value="SUBMIT" id="submit"><br>
+    <a href="create.html"><input type="submit" value="CREATE" id="create"></a>
+  </body>
+  <script>
+    var btn=document.getElementById("submit");
+    btn.addEventListener('click',checkValid);
+
+    function checkValid()
+    { console.log("HELOO");
+      let username=document.getElementById("username");
+      if(username.validity.valueMissing || username.value.trim()=='')
+      {
+        alert("Please do not leave the fields empty");
+      }
+      let password=document.getElementById("password");
+      if(password.validity.valueMissing || password.value.trim()=='')
+      {
+        alert("Please do not leave the fields empty");
+      }
+    }
+
+
+  </script>
+</html>

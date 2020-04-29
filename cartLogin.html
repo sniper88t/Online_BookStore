@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Roy's Bookstore</title>
+    <link rel= "stylesheet" type= "text/css"  href= "style.css">
+
+  </head>
+  <body>
+    <div class = "search_area">
+          <input type = "text"  id = "searchBar" placeholder = "Keyword(s)">
+          <input type = "button" id = "searchButton" value = "Search" onclick = "window.location.href = 'main.php?show=searchFunc&words='+document.getElementById('searchBar').value">
+      </div>
+    <div id="login_box">
+    <h1 id="heading"> Roy's Bookstore </h1>
+    <br>
+    <input id="username" type="text" class="inputs" placeholder="Username" > <br>
+    <input id="password" type="password" class="inputs" placeholder="Password"> <br>
+    <div id="entries"></div>
+    <input type="submit" class="login_buttons"value="SUBMIT" id="submit">
+    <a href="cartCreateAccount.php"><input type="submit" class="login_buttons" value="CREATE" id="create"></a>
+  </div>
+  </body>
+  <script>
+    var btn=document.getElementById("submit");
+    btn.addEventListener('click',checkValid);
+
+    function checkValid()
+    {
+      let username=document.getElementById("username");
+      let password=document.getElementById("password");
+      if(username.validity.valueMissing || username.value.trim()=='')
+      {
+        alert("Please do not leave the fields empty");
+      }
+      else if(password.validity.valueMissing || password.value.trim()=='')
+      {
+        alert("Please do not leave the fields empty");
+      }
+      else {
+
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+          xmlhttp = new XMLHttpRequest();
+        } else {
+          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+          xmlhttp.onreadystatechange = function () {
+              if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var mesgs = document.getElementById("entries");
+                if (xmlhttp.responseText!="")
+                {
+                  mesgs.innerHTML = xmlhttp.responseText;
+                  window.setTimeout(function(){
+
+                 window.location.href = "cartLogin.html";
+             }, 3000);
+
+                }
+                else {
+                  window.location.href = "cart.php";
+
+                }
+
+              }
+            }
+            xmlhttp.open("POST", "cartVerifyLogin.php",true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("username="+document.getElementById("username").value+"&password="+document.getElementById("password").value);
+              }
+            }
+
+
+  </script>
+</html>
